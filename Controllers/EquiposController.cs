@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APIPruebaNet.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class EquiposController : ControllerBase
@@ -22,6 +22,17 @@ namespace APIPruebaNet.Controllers
         {
             var equipos = await _equipoService.GetEquiposAsync();
             return Ok(equipos);
+        }
+
+        [HttpGet("{eq_Id}")]
+        public async Task<ActionResult<Equipo>> GetEquipo(int eq_Id)
+        {
+            var equipo = await _equipoService.GetEquipoAsync(eq_Id);
+            if (equipo == null)
+            {
+                return NotFound();
+            }
+            return Ok(equipo);
         }
     }
 }
