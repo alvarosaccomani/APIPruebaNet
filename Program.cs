@@ -1,4 +1,10 @@
+using Microsoft.Extensions.Configuration;
+using APIPruebaNet.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configuro los servicios
+builder.Services.AddScoped<EquipoService>();
 
 // Add services to the container.
 
