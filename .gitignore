@@ -1,0 +1,56 @@
+# Compiled source #
+###################
+*.class
+*.com
+*.dll
+*.exe
+*.o
+*.so
+
+# Folders #
+###########
+bin/
+obj/
+
+# User-specific files #
+#######################
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files #
+#######################
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files #
+##############################
+mono_crash.*
+
+# Windows image file caches
+###########################
+Thumbs.db
+ehthumbs.db
+
+# Folder config file #
+######################
+Desktop.ini
+
+# VS Code #
+###########
+.vscode/
+
+# ASP.NET Scaffolding #
+######################
+ScaffoldingReadMe.txt
+
+# .NET SDK #
+############
+.dotnet/
+.vs/
+.vscode/
