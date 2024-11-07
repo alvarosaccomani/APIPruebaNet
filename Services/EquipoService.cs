@@ -1,6 +1,7 @@
 ﻿using APIPruebaNet.Models;
 using Npgsql;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace APIPruebaNet.Services
@@ -60,5 +61,22 @@ namespace APIPruebaNet.Services
             }
             return equipo;
         }
+
+        public async Task AddEquipoAsync(Equipo equipo)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new NpgsqlCommand("INSERT INTO eq_equipos (eq_nombre, eq_precio) VALUES (@eq_nombre, @eq_precio)", connection))
+                {
+                    command.Parameters.AddWithValue("eq_nombre", equipo.eq_Nombre);
+                    command.Parameters.AddWithValue("eq_precio", equipo.eq_Precio);
+                    await command.ExecuteNonQueryAsync();
+                }
+
+            }
+        }
+
+
     }
 }
