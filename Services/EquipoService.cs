@@ -92,6 +92,18 @@ namespace APIPruebaNet.Services
             }
         }
 
+        public async Task EliminaEquipoAsync(int eq_Id)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new NpgsqlCommand("DELETE FROM eq_equipos WHERE eq_id = @eq_id", connection))
+                {
+                    command.Parameters.AddWithValue("eq_id", eq_Id);
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
 
     }
 }
