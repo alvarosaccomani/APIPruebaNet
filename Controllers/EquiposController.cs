@@ -53,5 +53,12 @@ namespace APIPruebaNet.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{eq_Id}")]
+        public async Task<IActionResult> DeleteEquipo(int eq_Id)
+        {
+            await _equipoService.EliminaEquipoAsync(eq_Id);
+            return NoContent();
+        }
+
     }
 }
