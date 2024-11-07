@@ -41,5 +41,17 @@ namespace APIPruebaNet.Controllers
             await _equipoService.AddEquipoAsync(equipo);
             return CreatedAtAction(nameof(GetEquipo), new { eq_id = equipo.eq_Id }, equipo);
         }
+
+        [HttpPut("{eq_Id}")]
+        public async Task<ActionResult> PutEquipo(int eq_Id, Equipo equipo)
+        {
+            if (eq_Id != equipo.eq_Id)
+            {
+                return BadRequest();
+            }
+            await _equipoService.ActualizarEquipoAsync(eq_Id, equipo);
+            return NoContent();
+        }
+
     }
 }
