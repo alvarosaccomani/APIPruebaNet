@@ -34,5 +34,12 @@ namespace APIPruebaNet.Controllers
             }
             return Ok(equipo);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> PostEquipo(Equipo equipo)
+        {
+            await _equipoService.AddEquipoAsync(equipo);
+            return CreatedAtAction(nameof(GetEquipo), new { eq_id = equipo.eq_Id }, equipo);
+        }
     }
 }
