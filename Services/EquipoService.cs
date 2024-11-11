@@ -67,10 +67,12 @@ namespace APIPruebaNet.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                using (var command = new NpgsqlCommand("INSERT INTO eq_equipos (eq_nombre, eq_precio) VALUES (@eq_nombre, @eq_precio)", connection))
+                using (var command = new NpgsqlCommand("INSERT INTO eq_equipos (eq_nombre, eq_precio, eq_documentacion, eq_contenido) VALUES (@eq_nombre, @eq_precio, @eq_documentacion, @eq_contenido)", connection))
                 {
                     command.Parameters.AddWithValue("eq_nombre", equipo.eq_Nombre);
                     command.Parameters.AddWithValue("eq_precio", equipo.eq_Precio);
+                    command.Parameters.AddWithValue("eq_documentacion", equipo.eq_Documentacion);
+                    command.Parameters.AddWithValue("eq_contenido", equipo.eq_Contenido);
                     await command.ExecuteNonQueryAsync();
                 }
 

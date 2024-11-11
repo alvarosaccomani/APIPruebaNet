@@ -36,7 +36,7 @@ namespace APIPruebaNet.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostEquipo(Equipo equipo)
+        public async Task<ActionResult> PostEquipo([FromBody] Equipo equipo)
         {
             await _equipoService.AddEquipoAsync(equipo);
             return CreatedAtAction(nameof(GetEquipo), new { eq_id = equipo.eq_Id }, equipo);
