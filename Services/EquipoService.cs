@@ -42,7 +42,7 @@ namespace APIPruebaNet.Services
             using (var connection = new NpgsqlConnection(_connectionString)) 
             {
                 await connection.OpenAsync();
-                using(var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio FROM eq_equipos WHERE eq_id = @eq_id", connection))
+                using(var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio, eq_Documentacion, eq_Contenido FROM eq_equipos WHERE eq_id = @eq_id", connection))
                 {
                     command.Parameters.AddWithValue("eq_Id", eq_Id);
                     using (var reader = await command.ExecuteReaderAsync())
@@ -53,7 +53,9 @@ namespace APIPruebaNet.Services
                             {
                                 eq_Id = reader.GetInt32(0),
                                 eq_Nombre = reader.GetString(1),
-                                eq_Precio = reader.GetDouble(2)
+                                eq_Precio = reader.GetDouble(2),
+                                eq_Documentacion = reader.GetString(3),
+                                eq_Contenido = reader["eq_Contenido"] as byte[]
                             };
                         }
                     }
