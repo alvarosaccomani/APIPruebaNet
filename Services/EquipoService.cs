@@ -27,7 +27,8 @@ namespace APIPruebaNet.Services
                         equipos.Add(new Equipo {
                             eq_Id = reader.GetInt32(0),
                             eq_Nombre = reader.GetString(1),
-                            eq_Precio = reader.GetDouble(2)
+                            eq_Precio = reader.GetDouble(2),
+                            eq_Documentacion = reader.GetString(3)
                         });
                     }
                 }
