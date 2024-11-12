@@ -46,31 +46,39 @@ namespace APIPruebaNet.Services
 
         public async Task<Equipo> GetEquipoAsync(int eq_Id)
         {
-            Equipo equipo = null;
-
-            using (var connection = new NpgsqlConnection(_connectionString)) 
+            try 
             {
-                await connection.OpenAsync();
-                using(var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio, eq_Documentacion, eq_Contenido FROM eq_equipos WHERE eq_id = @eq_id", connection))
+                Equipo equipo = null;
+
+                using (var connection = new NpgsqlConnection(_connectionString)) 
                 {
-                    command.Parameters.AddWithValue("eq_Id", eq_Id);
-                    using (var reader = await command.ExecuteReaderAsync())
+                    await connection.OpenAsync();
+                    using(var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio, eq_Documentacion, eq_Contenido FROM eq_equipos WHERE eq_id = @eq_id", connection))
                     {
-                        if (await reader.ReadAsync())
+                        command.Parameters.AddWithValue("eq_Id", eq_Id);
+                        using (var reader = await command.ExecuteReaderAsync())
                         {
-                            equipo = new Equipo
+                            if (await reader.ReadAsync())
                             {
-                                eq_Id = reader.GetInt32(0),
-                                eq_Nombre = reader.GetString(1),
-                                eq_Precio = reader.GetDouble(2),
-                                eq_Documentacion = reader.GetString(3),
-                                eq_Contenido = reader["eq_Contenido"] as byte[]
-                            };
+                                equipo = new Equipo
+                                {
+                                    eq_Id = reader.GetInt32(0),
+                                    eq_Nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                    eq_Precio = reader.IsDBNull(2) ? null : reader.GetDouble(2),
+                                    eq_Documentacion = reader.IsDBNull(3) ? null : reader.GetString(3),
+                                    eq_Contenido = reader["eq_Contenido"] as byte[]
+                                };
+                            }
                         }
                     }
                 }
+                return equipo;
             }
-            return equipo;
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public async Task AddEquipoAsync(Equipo equipo)
