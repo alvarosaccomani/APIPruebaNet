@@ -17,23 +17,31 @@ namespace APIPruebaNet.Services
 
         public async Task<List<Equipo>> GetEquiposAsync()
         {
-            var equipos = new List<Equipo>();
+            try 
+            {
+                var equipos = new List<Equipo>();
 
-            using (var connection = new NpgsqlConnection(_connectionString)) {
-                await connection.OpenAsync();
-                using (var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio FROM eq_equipos", connection))
-                using (var reader = await command.ExecuteReaderAsync()) {
-                    while (await reader.ReadAsync()) {
-                        equipos.Add(new Equipo {
-                            eq_Id = reader.GetInt32(0),
-                            eq_Nombre = reader.GetString(1),
-                            eq_Precio = reader.GetDouble(2),
-                            eq_Documentacion = reader.GetString(3)
-                        });
+                using (var connection = new NpgsqlConnection(_connectionString)) {
+                    await connection.OpenAsync();
+                    using (var command = new NpgsqlCommand("SELECT eq_id, eq_nombre, eq_precio, eq_documentacion FROM eq_equipos", connection))
+                    using (var reader = await command.ExecuteReaderAsync()) {
+                        while (await reader.ReadAsync()) {
+                            equipos.Add(new Equipo {
+                                eq_Id = reader.GetInt32(0),
+                                eq_Nombre = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                eq_Precio = reader.IsDBNull(2) ? null : reader.GetDouble(2),
+                                eq_Documentacion = reader.IsDBNull(3) ? null : reader.GetString(3)
+                            });
+                        }
                     }
                 }
+                return equipos;
             }
-            return equipos;
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public async Task<Equipo> GetEquipoAsync(int eq_Id)
