@@ -54,3 +54,6 @@ ScaffoldingReadMe.txt
 .dotnet/
 .vs/
 .vscode/
+
+# Includes File Name #
+*copy*
